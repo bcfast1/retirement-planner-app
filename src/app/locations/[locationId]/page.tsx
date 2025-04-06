@@ -42,12 +42,12 @@ interface Location {
   foodSceneDetails?: FoodScenePlace[]; // Expecting the structured array now
 }
 
-// Define props for the page component
-interface LocationPageProps {
-  params: {
-    locationId: string;
-  };
-}
+// Define props for the page component - Removed as per fix
+// interface LocationPageProps {
+//   params: {
+//     locationId: string;
+//   };
+// }
 
 // Function to find location data by ID
 const getLocationById = (id: string): Location | undefined => {
@@ -64,8 +64,9 @@ const MapDisplay = dynamic(
   }
 );
 
-export default function LocationPage({ params }: LocationPageProps) {
-  const { locationId } = params;
+// Update function signature to directly type params
+export default function LocationPage({ params }: { params: { locationId: string } }) {
+  const { locationId } = params; // This should now work correctly
   const location = getLocationById(locationId);
 
   // If location not found, show 404
