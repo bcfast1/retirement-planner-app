@@ -65,17 +65,9 @@ const MapDisplay = dynamic(
   }
 );
 
-// Define the specific props structure expected for this page component
-interface LocationPageProps {
-  params: {
-    locationId: string;
-  };
-  // searchParams?: { [key: string]: string | string[] | undefined }; // Optional searchParams if needed later
-}
-
-// Update function signature to use the specific props interface
-export default function LocationPage({ params }: LocationPageProps) {
-  const { locationId } = params; // Access locationId from the correctly typed params
+// Update function signature to destructure params directly
+export default function LocationPage({ params }: { params: { locationId: string } }) {
+  const { locationId } = params;
   const location = getLocationById(locationId);
 
   // If location not found, show 404
