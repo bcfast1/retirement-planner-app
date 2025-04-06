@@ -3,6 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet'; // Import Leaflet library
+import Link from 'next/link'; // Import Link
 
 import React from 'react'; // Ensure React is imported if not already implicitly
 
@@ -21,6 +22,18 @@ interface Location {
   recreationFocus: boolean;
   latitude: number | null;
   longitude: number | null;
+  foodSceneDetails?: FoodScenePlace[]; // Add optional array for detailed places
+}
+
+// Define structure for individual food scene places
+interface FoodScenePlace {
+  name: string;
+  type: string[]; // Array of types (e.g., ['Brewpub', 'Downtown'])
+  address?: string; // Optional address
+  latitude: number;
+  longitude: number;
+  notes?: string; // Optional notes
+  link?: string | null; // Optional link
 }
 
 // Define an interface for Airport data
@@ -44,6 +57,10 @@ interface MapDisplayProps {
   locations: Location[];
   airports?: Airport[];
   hospitals?: Hospital[]; // Make hospitals optional
+  foodScenePlaces?: FoodScenePlace[]; // Add prop for food scene places
+  selectedFoodSceneTypes?: string[]; // Add prop for selected types
+  mapCenter?: [number, number]; // Optional prop to override center
+  mapZoom?: number; // Optional prop to override zoom
 }
 
 // --- Icon Definitions ---
@@ -97,22 +114,52 @@ const hospitalIcon = L.divIcon({
   popupAnchor: [0, -10] // Adjust popup position
 });
 
+// Custom DivIcon for food places (e.g., fork and knife) - Placeholder SVG
+const foodSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#A855F7" width="24px" height="24px"> {/* Purple fill */}
+  <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M16 6v8h3v8h2V2c-2.76 0-5 2.24-5 4zm-5 3H9V2H7v7H5V2H3v7c0 2.21 1.79 4 4 4v9h2v-9c2.21 0 4-1.79 4-4V2h-2v7z"/>
+</svg>
+`;
+
+const foodIcon = L.divIcon({
+  html: foodSVG,
+  className: 'leaflet-div-icon-food',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12]
+});
+
+
 // Set default icon for regular markers (important if prototype was modified elsewhere)
 L.Marker.prototype.options.icon = locationIcon;
 
 
-const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospitals = [] }) => { // Add hospitals prop
-  // Filter locations that have valid coordinates and explicitly include description and realEstateLink in the type guard
+const MapDisplay: React.FC<MapDisplayProps> = ({
+  locations,
+  airports = [],
+  hospitals = [],
+  foodScenePlaces = [], // Default to empty array
+  selectedFoodSceneTypes = [], // Default to empty array
+  mapCenter, // Receive optional center
+  mapZoom // Receive optional zoom
+}) => {
+  // Filter locations that have valid coordinates
   const locationsWithCoords = locations.filter(
     (loc): loc is Location & { latitude: number; longitude: number; description: string; realEstateLink?: string } =>
-      loc.latitude !== null && loc.longitude !== null && typeof loc.description === 'string'
-      // realEstateLink is optional, so no need to check its type here, just ensure it's part of the resulting type
+      loc.latitude !== null && loc.longitude !== null
   );
 
-  // Calculate a rough center point (e.g., central SC/GA)
-  const centerLat = 33.5;
-  const centerLng = -82.0;
-  const initialZoom = 7;
+  // Filter food scene places based on selected types
+  const filteredFoodScenePlaces = foodScenePlaces.filter(place =>
+    selectedFoodSceneTypes.length === 0 || // Show all if no types selected or "All" is implicitly handled by parent
+    place.type.some(t => selectedFoodSceneTypes.includes(t))
+  );
+
+  // Determine map center and zoom
+  // Use provided props if available, otherwise calculate default
+  const center: [number, number] = mapCenter ?? [33.5, -82.0]; // Default center SC/GA
+  const zoom: number = mapZoom ?? 7; // Default zoom
 
   if (typeof window === 'undefined') {
     // Avoid rendering Leaflet components on the server
@@ -121,8 +168,8 @@ const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospi
 
   return (
     <MapContainer
-      center={[centerLat, centerLng]}
-      zoom={initialZoom}
+      center={center} // Use the determined center
+      zoom={zoom} // Use the determined zoom
       scrollWheelZoom={true} // Enable scroll wheel zoom
       style={{ height: '500px', width: '100%' }} // Ensure container has dimensions
       className="rounded-lg shadow border border-gray-300 dark:border-gray-700"
@@ -154,6 +201,18 @@ const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospi
                 >
                   View Homes (Zillow)
                 </a>
+              </>
+            )}
+             {/* Add Food Scene Detail Link for Macon */}
+            {location.id === 'macon-ga' && (
+              <>
+                <br />
+                <Link
+                  href={`/locations/${location.id}`}
+                  className="text-purple-600 dark:text-purple-400 hover:underline text-xs"
+                >
+                  View Food Scene Details
+                </Link>
               </>
             )}
           </Popup>
@@ -196,6 +255,32 @@ const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospi
                   Visit Website
                 </a>
               </>
+            )}
+          </Popup>
+        </Marker>
+      ))}
+
+      {/* Render Food Scene Place Markers */}
+      {filteredFoodScenePlaces.map((place, index) => (
+        <Marker
+          key={`food-${place.name}-${index}`} // Use name and index for key
+          position={[place.latitude, place.longitude]}
+          icon={foodIcon} // Use the food icon
+        >
+          <Popup>
+            <strong>{place.name}</strong><br/>
+            Type(s): {place.type.join(', ')}<br/>
+            {place.address && <>{place.address}<br/></>}
+            {place.notes && <>{place.notes}<br/></>}
+            {place.link && (
+              <a
+                href={place.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline text-xs"
+              >
+                Visit Website
+              </a>
             )}
           </Popup>
         </Marker>

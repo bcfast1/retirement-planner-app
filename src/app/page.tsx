@@ -2,8 +2,10 @@
 
 import { useState, useMemo } from 'react'; // Import useState
 import dynamic from 'next/dynamic';
+import Link from 'next/link'; // Import Link
 import locationsData from '../../data/locations.json';
 import FilterControls, { FilterState } from '../components/FilterControls'; // Import FilterControls and its state type
+import countyFoodDataRaw from '../../data/county_food_data.json'; // Import the new county data
 
 // Define interfaces for data structures
 interface Location {
@@ -16,12 +18,17 @@ interface Location {
   airport: string;
   airportProximityMinutes: number | null;
   foodSceneFocus: boolean;
-  recreationFocus: boolean; // Add missing property back
+  recreationFocus: boolean;
   latitude: number | null;
   longitude: number | null;
   foodSceneLink?: string;
   recreationLink?: string;
-  realEstateLink?: string; // Add real estate link field
+  realEstateLink?: string;
+  // Add optional fields for county food data
+  countyFips?: string | null; // Add FIPS code for linking
+  fsrPer1k?: number | null; // Full-service restaurants per 1k pop
+  pcFsrSales?: number | null; // Per capita restaurant sales
+  fmrktPer1k?: number | null; // Farmers' markets per 1k pop
 }
 
 interface Airport {
@@ -40,10 +47,83 @@ interface Hospital {
   websiteLink?: string; // Add optional website link
 }
 
+// Define County Food Data structure (matching the output of the script)
+interface CountyFoodData {
+    FIPS: string;
+    State: string;
+    County: string;
+    FSRPTH16?: number | null;
+    PC_FSRSALES12?: number | null;
+    FMRKTPTH18?: number | null;
+}
+
+// Create a lookup map for county data by FIPS code
+const countyDataMap: { [key: string]: CountyFoodData } = {};
+(countyFoodDataRaw as CountyFoodData[]).forEach(county => {
+    if (county.FIPS) {
+        // Ensure FIPS is consistently padded if needed
+        const fipsKey = county.FIPS.padStart(5, '0');
+        countyDataMap[fipsKey] = county;
+    }
+});
+
+// Add FIPS codes to locations (based on previous searches)
+const locationToFipsMap: { [key: string]: string | null } = {
+    "simpsonville-sc": "45045",
+    "travelers-rest-sc": "45045",
+    "pendleton-sc": "45007",
+    "easley-sc": "45077",
+    "honea-path-sc": "45007", // Using Anderson
+    "seneca-sc": "45073",
+    "bluffton-sc": "45013",
+    "beaufort-sc": "45013",
+    "summerville-sc": "45035", // Using Dorchester
+    "moncks-corner-sc": "45015",
+    "georgetown-sc": "45043",
+    "murrells-inlet-sc": "45043",
+    "little-river-sc": "45051",
+    "conway-sc": "45051",
+    "socastee-sc": "45051",
+    "garden-city-sc": "45051", // Using Horry
+    "cayce-sc": "45063", // Using Lexington
+    "west-columbia-sc": "45063",
+    "irmo-sc": "45063", // Using Lexington
+    "batesburg-leesville-sc": "45063", // Using Lexington
+    "macon-ga": "13021",
+    "adairsville-ga": "13015",
+    // FIPS for others were not gathered yet - map to null
+    "clarkesville-ga": null, // Habersham
+    "roswell-ga": null, // Fulton
+    "fayetteville-ga": null, // Fayette
+    "pooler-ga": null, // Chatham
+    "port-wentworth-ga": null, // Chatham
+    "rincon-ga": null, // Effingham
+    "georgetown-ga": null, // Chatham
+    "richmond-hill-ga": null, // Bryan
+    "evans-ga": null, // Columbia
+    "north-augusta-sc": null, // Aiken
+    "aiken-sc": null, // Aiken
+    "martinez-ga": null, // Columbia
+    "thomson-ga": null, // McDuffie
+};
+
 
 export default function Home() {
-  // Original locations data (type assertion)
-  const locations: Location[] = locationsData as Location[];
+  // Original locations data, now augmented with FIPS and county data
+  const augmentedLocations: Location[] = useMemo(() => {
+      return (locationsData as Location[]).map(loc => {
+          const fips = locationToFipsMap[loc.id] ?? null; // Get FIPS or null
+          const countyData = fips ? countyDataMap[fips] : undefined;
+          return {
+              ...loc,
+              countyFips: fips, // Store the FIPS code itself
+              fsrPer1k: countyData?.FSRPTH16,
+              pcFsrSales: countyData?.PC_FSRSALES12,
+              fmrktPer1k: countyData?.FMRKTPTH18,
+          };
+      });
+  }, []); // Calculate only once
+
 
   // Define Airport Data
   const airports: Airport[] = [
@@ -78,7 +158,7 @@ export default function Home() {
   // State for filters
   const [filters, setFilters] = useState<FilterState>({
     state: 'ALL',
-    minPrice: null, // Add minPrice to initial state
+    minPrice: null,
     maxPrice: null,
     maxAirportProximity: null,
     foodSceneFocus: false,
@@ -91,8 +171,9 @@ export default function Home() {
   };
 
   // Calculate filtered locations based on current filters
+  // Use augmentedLocations which includes county data
   const filteredLocations = useMemo(() => {
-    return locations.filter(loc => {
+    return augmentedLocations.filter(loc => { // Use augmentedLocations here
       // State filter
       if (filters.state !== 'ALL' && loc.state !== filters.state) {
         return false;
@@ -125,13 +206,14 @@ export default function Home() {
       }
       return true; // Include location if all checks pass
     });
-  }, [locations, filters]); // Recalculate when locations or filters change
+  }, [augmentedLocations, filters]); // FIX: Use augmentedLocations in dependency array
 
   // Get unique states for the dropdown
   const allStates = useMemo(() => {
-    const states = new Set(locations.map(loc => loc.state));
+    // Use augmentedLocations here to ensure consistency if needed, though original locations is likely fine
+    const states = new Set(augmentedLocations.map(loc => loc.state)); // FIX: Use augmentedLocations
     return Array.from(states).sort();
-  }, [locations]);
+  }, [augmentedLocations]); // FIX: Use augmentedLocations in dependency array
 
 
   // Dynamically import the MapDisplay component only on the client-side
@@ -185,7 +267,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
              {/* Render filtered locations */}
             {filteredLocations.length > 0 ? (
-              filteredLocations.map((location) => (
+              filteredLocations.map((location: Location) => ( // Explicitly type location here
                 <div
                   key={location.id}
               className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700"
@@ -213,6 +295,13 @@ export default function Home() {
                   <span className={`inline-block rounded px-2 py-0.5 ${location.recreationFocus ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}>
                     Recreation
                   </span>
+                </div>
+                {/* Display County Food Data */}
+                <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 text-xs">
+                  <p className="font-semibold mb-0.5">County Data ({location.countyFips ? `FIPS: ${location.countyFips}` : 'N/A'}):</p>
+                  <p>Restaurants/1k (2016): {location.fsrPer1k?.toFixed(2) ?? 'N/A'}</p>
+                  <p>Restaurant Spend/Cap (2012): {location.pcFsrSales ? `$${location.pcFsrSales.toFixed(2)}` : 'N/A'}</p>
+                  <p>Farmers Markets/1k (2018): {location.fmrktPer1k?.toFixed(2) ?? 'N/A'}</p>
                 </div>
                  {/* Add Links */}
                 <div className="mt-2 text-xs">
@@ -246,6 +335,15 @@ export default function Home() {
                     >
                       Real Estate
                     </a>
+                  )}
+                  {/* Add Food Scene Detail Link for Macon */}
+                  {location.id === 'macon-ga' && (
+                     <Link
+                      href={`/locations/${location.id}`}
+                      className="inline-block bg-purple-100 dark:bg-purple-900 hover:bg-purple-200 dark:hover:bg-purple-800 text-purple-800 dark:text-purple-200 text-xs font-semibold px-2.5 py-0.5 rounded"
+                    >
+                      Food Scene Details
+                    </Link>
                   )}
                 </div>
               </div>

@@ -354,7 +354,198 @@
     "longitude": -83.632,
     "foodSceneLink": "https://visitmacon.org/",
     "recreationLink": "https://www.maconbibb.us/recreation/",
-    "realEstateLink": "https://www.zillow.com/homes/Macon-GA_rb/"
+    "realEstateLink": "https://www.zillow.com/homes/Macon-GA_rb/",
+    "foodSceneDetails": [
+      {
+        "name": "The Rookery",
+        "type": ["Burger", "Downtown"],
+        "address": "543 Cherry St, Macon, GA 31201",
+        "latitude": 32.8363875,
+        "longitude": -83.6280171,
+        "notes": "Macon staple known for burgers & milkshakes, laid-back atmosphere.",
+        "link": "https://www.rookerymacon.com/"
+      },
+      {
+        "name": "Dovetail",
+        "type": ["Southern", "Fine Dining", "Downtown"],
+        "address": "543 Cherry St, Macon, GA 31201",
+        "latitude": 32.8363875,
+        "longitude": -83.6280171,
+        "notes": "Critically-acclaimed Southern cuisine with a twist, located above The Rookery.",
+        "link": "https://www.dovetailmacon.com/"
+      },
+      {
+        "name": "Ocmulgee Brewpub",
+        "type": ["Brewpub", "Burger", "Downtown"],
+        "address": "484 2nd St, Macon, GA 31201",
+        "latitude": 32.8354308,
+        "longitude": -83.6295762,
+        "notes": "Gourmet burgers and house-brewed craft beer.",
+        "link": "https://ocmulgeebrewpub.com/"
+      },
+      {
+        "name": "Piedmont Brewery & Kitchen",
+        "type": ["Brewpub", "Smokehouse", "Downtown"],
+        "address": "450 3rd St, Macon, GA 31201",
+        "latitude": 32.8346314,
+        "longitude": -83.6275684,
+        "notes": "Modern smokehouse, craft beer, and a family-friendly game room.",
+        "link": "https://www.piedmontbrewery.com/"
+      },
+      {
+        "name": "Kinjo Kitchen + Cocktails",
+        "type": ["Asian Fusion", "Downtown"],
+        "address": "497 2nd St, Ste A, Macon, GA 31201",
+        "latitude": 32.8356105,
+        "longitude": -83.6301269,
+        "notes": "Asian-inspired comfort food with Southern flair, craft cocktails.",
+        "link": "https://kinjokitchen.com/"
+      },
+      {
+        "name": "Parish on Cherry St.",
+        "type": ["Louisiana/Cajun", "Downtown"],
+        "address": "580 Cherry St, Macon, GA 31201",
+        "latitude": 32.8361221,
+        "longitude": -83.62883630000002,
+        "notes": "Creole/Cajun dishes like Shrimp & Grits and Gumbo.",
+        "link": "https://parishoncherry.com/"
+      },
+      {
+        "name": "La Bella Morelia",
+        "type": ["Mexican", "Downtown"],
+        "address": "524 Mulberry St, Macon, GA 31201",
+        "latitude": 32.8370353,
+        "longitude": -83.6272007,
+        "notes": "Authentic Mexican taqueria, known for Quesa Birria tacos.",
+        "link": "https://labellamoreliageorgia.com/"
+      },
+      {
+        "name": "Natalia's",
+        "type": ["Fine Dining", "Italian"],
+        "address": "201 N Macon St, Macon, GA 31210",
+        "latitude": 32.9274536,
+        "longitude": -83.7369925,
+        "notes": "Fine dining in North Macon with Italian elegance.",
+        "link": "https://www.natalias.net/"
+      },
+      {
+        "name": "The Back Burner",
+        "type": ["Fine Dining", "French"],
+        "address": "2242 Ingleside Ave, Macon, GA 31204",
+        "latitude": 32.8534439,
+        "longitude": -83.6525786,
+        "notes": "Macon staple since 1997 offering steaks, chops, seafood.",
+        "link": "https://www.backburnermacon.com/"
+      },
+      {
+        "name": "Nu-Way Weiners (Napier)",
+        "type": ["Local Institution", "Hot Dog"],
+        "address": "921 Hillcrest Blvd, Macon, GA 31204",
+        "latitude": 32.8389638,
+        "longitude": -83.6749516,
+        "notes": "Iconic hot dog stand since 1916, known for red 'weiners'. This is the oldest operating location.",
+        "link": "https://nu-wayweiners.com/"
+      },
+      {
+        "name": "Cox Cafe",
+        "type": ["Soul Food", "Hidden Gem"],
+        "address": "694 Lower Poplar St, Macon, GA 31201",
+        "latitude": 32.8250237,
+        "longitude": -83.61253649999999,
+        "notes": "Southern comfort food, home-style cooking, known for hoecakes.",
+        "link": null
+      },
+      {
+        "name": "Fish Port 2",
+        "type": ["Seafood", "Hidden Gem"],
+        "address": "2795 Montpelier Ave, Macon, GA 31204",
+        "latitude": 32.8310628,
+        "longitude": -83.668399,
+        "notes": "Local seafood spot famous for its unique orange 'dock sauce'.",
+        "link": null
+      },
+      {
+        "name": "J&F Caribbean Delight",
+        "type": ["Jamaican", "Hidden Gem"],
+        "address": "1686 N Atwood Dr, Macon, GA 31204",
+        "latitude": 32.8228647,
+        "longitude": -83.6986153,
+        "notes": "Authentic Jamaican cuisine, known for oxtail and jerk chicken.",
+        "link": null
+      },
+      {
+        "name": "Johnny V's",
+        "type": ["Diner", "Hidden Gem"],
+        "address": "5854 Columbus Rd, Macon, GA 31206",
+        "latitude": 32.8096831,
+        "longitude": -83.7485385,
+        "notes": "Classic diner experience for breakfast and lunch, known for red hot dogs.",
+        "link": null
+      },
+      {
+        "name": "Tokyo Alley",
+        "type": ["Asian", "Hidden Gem", "Downtown"],
+        "address": "574 Mulberry St Ln, Macon, GA 31201",
+        "latitude": 32.8367989,
+        "longitude": -83.62813469999999,
+        "notes": "Intimate downtown spot in an alley, known for cold noodle salad and lemon chicken.",
+        "link": "https://tokyoalley.com/"
+      },
+      {
+        "name": "Fall Line Brewing Co.",
+        "type": ["Brewery", "Downtown"],
+        "address": "567 Plum St, Macon, GA 31201",
+        "latitude": 32.833883,
+        "longitude": -83.6305407,
+        "notes": "Downtown brewery.",
+        "link": "https://falllinebrewingco.com/"
+      },
+      {
+        "name": "Bearfoot Tavern",
+        "type": ["Pub", "Downtown"],
+        "address": "468 2nd St, Macon, GA 31201",
+        "latitude": 32.8355691,
+        "longitude": -83.62938919999999,
+        "notes": "Gastropub with over 50 beers on tap and beer garden.",
+        "link": "https://www.bearfoottavern.com/"
+      },
+      {
+        "name": "Kudzu Seafood Company",
+        "type": ["Seafood", "Bar", "Downtown"],
+        "address": "512 Poplar St, Macon, GA 31201",
+        "latitude": 32.8342392,
+        "longitude": -83.62920840000001,
+        "notes": "Southern coastal seafood with rooftop bar (The Wheelhouse).",
+        "link": "https://kudzuseafood.com/"
+      },
+      {
+        "name": "Macon State Farmers Market",
+        "type": ["Market"],
+        "address": "2055 Eisenhower Pkwy, Macon, GA 31206",
+        "latitude": 32.8162495,
+        "longitude": -83.6839461,
+        "notes": "Large, daily market open 7 days a week.",
+        "link": "https://agr.georgia.gov/state-farmers-markets"
+      },
+      {
+        "name": "Wesleyan Market",
+        "type": ["Market"],
+        "address": "4760 Forsyth Road, Macon, GA 31210",
+        "latitude": 32.8735186,
+        "longitude": -83.7159077,
+        "notes": "Monthly market (2nd Saturday) on Wesleyan College campus.",
+        "link": "https://www.wesleyancollege.edu/studentlife/campusservices/Wesleyan-Market-Home.cfm"
+      },
+      {
+        "name": "Triangle Arts Market",
+        "type": ["Market"],
+        "address": "206 Lower Elm St, Macon, GA 31206",
+        "latitude": 32.818547,
+        "longitude": -83.62852099999999,
+        "notes": "Market held at Triangle Arts creative space (check schedule).",
+        "link": "https://triangleartsmacon.com/"
+      }
+    ]
   },
   {
     "id": "adairsville-ga",

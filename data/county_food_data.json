@@ -1,0 +1,114 @@
+[
+  {
+    "FIPS": "13015",
+    "State": "GA",
+    "County": "Bartow",
+    "FSRPTH16": 0.647774845,
+    "PC_FSRSALES12": 649.8371362,
+    "FMRKTPTH18": 0.00939779
+  },
+  {
+    "FIPS": "13021",
+    "State": "GA",
+    "County": "Bibb",
+    "FSRPTH16": 0.796318658,
+    "PC_FSRSALES12": 649.8371362,
+    "FMRKTPTH18": 0.019595675
+  },
+  {
+    "FIPS": "45001",
+    "State": "SC",
+    "County": "Abbeville",
+    "FSRPTH16": 0.445037828,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.081496269
+  },
+  {
+    "FIPS": "45007",
+    "State": "SC",
+    "County": "Anderson",
+    "FSRPTH16": 0.821562704,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.024939895
+  },
+  {
+    "FIPS": "45013",
+    "State": "SC",
+    "County": "Beaufort",
+    "FSRPTH16": 1.580407309,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.042391967
+  },
+  {
+    "FIPS": "45015",
+    "State": "SC",
+    "County": "Berkeley",
+    "FSRPTH16": 0.434242883,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.018092098
+  },
+  {
+    "FIPS": "45035",
+    "State": "SC",
+    "County": "Dorchester",
+    "FSRPTH16": 0.508239342,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.006224828
+  },
+  {
+    "FIPS": "45043",
+    "State": "SC",
+    "County": "Georgetown",
+    "FSRPTH16": 1.466419005,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.048193544
+  },
+  {
+    "FIPS": "45045",
+    "State": "SC",
+    "County": "Greenville",
+    "FSRPTH16": 0.899738294,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.017502476
+  },
+  {
+    "FIPS": "45051",
+    "State": "SC",
+    "County": "Horry",
+    "FSRPTH16": 1.711050274,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.02324588
+  },
+  {
+    "FIPS": "45063",
+    "State": "SC",
+    "County": "Lexington",
+    "FSRPTH16": 0.736747278,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.030505165
+  },
+  {
+    "FIPS": "45073",
+    "State": "SC",
+    "County": "Oconee",
+    "FSRPTH16": 0.615126886,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.025518667
+  },
+  {
+    "FIPS": "45077",
+    "State": "SC",
+    "County": "Pickens",
+    "FSRPTH16": 0.658863339,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.040020172
+  },
+  {
+    "FIPS": "45081",
+    "State": "SC",
+    "County": "Saluda",
+    "FSRPTH16": 0.34491254,
+    "PC_FSRSALES12": 688.2515349,
+    "FMRKTPTH18": 0.048676014
+  }
+]
