@@ -72,10 +72,12 @@ export default function LocationPage({ params }: { params: { locationId: string 
   // If location not found, show 404
   if (!location || !location.latitude || !location.longitude) {
     // Need lat/lon for map center
+    // Need lat/lon for map center
     notFound();
   }
 
-  const foodSceneDetails = location.foodSceneDetails || [];
+  // Memoize foodSceneDetails to address ESLint warning and ensure stability
+  const foodSceneDetails = useMemo(() => location.foodSceneDetails || [], [location.foodSceneDetails]);
 
   // Get unique types for filtering
   const allFoodSceneTypes = useMemo(() => {
