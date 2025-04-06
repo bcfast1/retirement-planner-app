@@ -65,7 +65,7 @@ const MapDisplay = dynamic(
   }
 );
 
-// Update function signature to destructure params directly
+// Revert: Update function signature to destructure params directly (removed async)
 export default function LocationPage({ params }: { params: { locationId: string } }) {
   const { locationId } = params;
   const location = getLocationById(locationId);
