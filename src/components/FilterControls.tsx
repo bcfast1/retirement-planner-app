@@ -28,10 +28,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
     onFilterChange({ state: e.target.value });
   };
 
-  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value ? parseInt(e.target.value, 10) : null;
-    onFilterChange({ maxPrice: value });
-  };
+   // Removed unused handleMaxPriceChange function
 
    const handleMaxAirportProximityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value ? parseInt(e.target.value, 10) : null;
