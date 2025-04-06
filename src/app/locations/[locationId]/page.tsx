@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 import dynamic from 'next/dynamic';
+// Removed incorrect PageProps import
 import locationsData from '../../../../data/locations.json'; // Adjust path based on directory structure
 import RestaurantFilterControls from '../../../components/RestaurantFilterControls'; // Import the new filter component
 
@@ -64,9 +65,17 @@ const MapDisplay = dynamic(
   }
 );
 
-// Update function signature to directly type params
-export default function LocationPage({ params }: { params: { locationId: string } }) {
-  const { locationId } = params; // This should now work correctly
+// Define the specific props structure expected for this page component
+interface LocationPageProps {
+  params: {
+    locationId: string;
+  };
+  // searchParams?: { [key: string]: string | string[] | undefined }; // Optional searchParams if needed later
+}
+
+// Update function signature to use the specific props interface
+export default function LocationPage({ params }: LocationPageProps) {
+  const { locationId } = params; // Access locationId from the correctly typed params
   const location = getLocationById(locationId);
 
   // If location not found, show 404
