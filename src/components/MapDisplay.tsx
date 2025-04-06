@@ -102,10 +102,11 @@ L.Marker.prototype.options.icon = locationIcon;
 
 
 const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospitals = [] }) => { // Add hospitals prop
-  // Filter locations that have valid coordinates and explicitly include description in the type guard
+  // Filter locations that have valid coordinates and explicitly include description and realEstateLink in the type guard
   const locationsWithCoords = locations.filter(
-    (loc): loc is Location & { latitude: number; longitude: number; description: string } =>
+    (loc): loc is Location & { latitude: number; longitude: number; description: string; realEstateLink?: string } =>
       loc.latitude !== null && loc.longitude !== null && typeof loc.description === 'string'
+      // realEstateLink is optional, so no need to check its type here, just ensure it's part of the resulting type
   );
 
   // Calculate a rough center point (e.g., central SC/GA)
@@ -141,6 +142,20 @@ const MapDisplay: React.FC<MapDisplayProps> = ({ locations, airports = [], hospi
             <strong>{location.name}, {location.state}</strong><br/>
             {/* Add more details here if needed */}
             {location.description.split('.')[0]}... {/* Should now be safe to access directly */}
+            {/* Add Zillow Link */}
+            {location.realEstateLink && (
+               <>
+                <br />
+                <a
+                  href={location.realEstateLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline text-xs"
+                >
+                  View Homes (Zillow)
+                </a>
+              </>
+            )}
           </Popup>
         </Marker>
       ))}
